@@ -1,3 +1,3 @@
 #! /bin/sh
 
-build/Patternoid img/planet_cicarettis.jpg
+build/src/Patternoid img/planet_cicarettis.jpg
