@@ -56,3 +56,6 @@ _deps
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+# Local image experiments
+img/processed/*
