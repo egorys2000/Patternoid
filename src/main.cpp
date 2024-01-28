@@ -7,6 +7,7 @@
 
 #include "contour_map.hpp"
 #include "cv_utils.hpp"
+#include "file_utils.hpp"
 
 int main(int argc, char** argv)
 {
@@ -14,7 +15,8 @@ int main(int argc, char** argv)
     {
         return EXIT_FAILURE;
     }
-    cv::Mat src = cv::imread(argv[1], cv::IMREAD_COLOR);
+    std::string testImgPath = argv[1];
+    cv::Mat src = cv::imread(testImgPath, cv::IMREAD_COLOR);
     if (!src.data)
     {
         printf("No image data \n");
@@ -25,7 +27,12 @@ int main(int argc, char** argv)
     contour::preprocess_image(src);
     contour::find_contours(src);
 
-    cv_utils::showImageInNewWindow(src, windowName);
+    file_utils::createFolderIfNotExists(file_utils::DEFAULT_OUTPUT_FOLDER);
+    auto outFilePath =
+        file_utils::DEFAULT_OUTPUT_FOLDER + file_utils::getFileNameFromPath(testImgPath);
+
+    printf("Saving to %s\n", outFilePath.c_str());
+    cv::imwrite(outFilePath, src);
 
     return EXIT_SUCCESS;
 }
