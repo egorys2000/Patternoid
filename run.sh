@@ -1,3 +1,7 @@
 #! /bin/sh
 
-build/src/Patternoid img/planet_cicarettis.jpg
+for f in img/*.jpg
+do
+    echo "Processing file $f..."
+    build/src/Patternoid $f
+done
