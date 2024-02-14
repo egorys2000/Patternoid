@@ -24,15 +24,16 @@ int main(int argc, char** argv)
     }
     const std::string windowName = "Display Image";
 
-    contour::preprocess_image(src);
-    contour::find_contours(src);
+    auto preprocessedImage = Contour::adaptivePreprocessImage(src);
+    auto contour = Contour::findContourPoints(preprocessedImage);
+    auto contourImage = Contour::drawControurPoints(src.cols, src.rows, contour);
 
-    file_utils::createFolderIfNotExists(file_utils::DEFAULT_OUTPUT_FOLDER);
+    FileUtils::createFolderIfNotExists(FileUtils::DEFAULT_OUTPUT_FOLDER);
     auto outFilePath =
-        file_utils::DEFAULT_OUTPUT_FOLDER + file_utils::getFileNameFromPath(testImgPath);
+        FileUtils::DEFAULT_OUTPUT_FOLDER + FileUtils::getFileNameFromPath(testImgPath);
 
     printf("Saving to %s\n", outFilePath.c_str());
-    cv::imwrite(outFilePath, src);
+    cv::imwrite(outFilePath, contourImage);
 
     return EXIT_SUCCESS;
 }

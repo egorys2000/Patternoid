@@ -11,6 +11,8 @@ set(SRC_DIR ${PROJECT_SOURCE_DIR}/src)
 file(GLOB_RECURSE SRC_FILES ${SRC_DIR}/*.cpp)
 list(FILTER SRC_FILES EXCLUDE REGEX "${SRC_DIR}/main.cpp")
 
+file(GLOB_RECURSE TEST_UTILS_SRC test_utils/*.cpp)
+
 # --- hello_test ---
 
 add_executable(
@@ -23,23 +25,24 @@ target_link_libraries(
 )
 
 # --- hello_test ---
-# --- cv_test ---
+# --- contour_extraction_tests ---
 
 add_executable(
-  cv_test
+  contour_extraction_tests
   ${SRC_FILES}
-  cv_test.cpp
+  ${TEST_UTILS_SRC}
+  contour_extraction_tests.cpp
 )
 
-target_include_directories(cv_test PRIVATE ${SRC_DIR})
+target_include_directories(contour_extraction_tests PRIVATE ${SRC_DIR})
 target_link_libraries(
-  cv_test
+  contour_extraction_tests
   GTest::gtest_main
   ${OpenCV_LIBS}
 )
 
-# --- cv_test ---
+# --- contour_extraction_tests ---
 
 include(GoogleTest)
 gtest_discover_tests(hello_test)
-gtest_discover_tests(cv_test)
+gtest_discover_tests(contour_extraction_tests)
